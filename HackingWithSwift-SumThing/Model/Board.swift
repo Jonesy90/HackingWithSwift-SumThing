@@ -61,6 +61,25 @@ class Board: ObservableObject {
             }
         }
         
+        // Creates an [[Int]] with 0 in each element.
         userCells = Array(repeating: Array(repeating: 0, count: size), count: size)
     }
+    
+    /// Takes the Int passed in, and apples it to the userCell row and column. Once an option has been made, it will update the selected row and/or column.
+    /// - Parameter number: The number passed in to apply to the userCell.
+    func enter(_ number: Int) {
+        if userCells[selectedRow][selectedCol] == number {
+            userCells[selectedRow][selectedCol] = 0
+        } else {
+            userCells[selectedRow][selectedCol] = number
+            
+            if selectedCol < exampleCells[0].count - 1 {
+                selectedCol += 1
+            } else if selectedRow < exampleCells.count - 1 {
+                selectedRow += 1
+                selectedCol = 0
+            }
+        }
+    }
+    
 }
