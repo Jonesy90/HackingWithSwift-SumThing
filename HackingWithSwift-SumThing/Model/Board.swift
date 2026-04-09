@@ -25,6 +25,8 @@ class Board: ObservableObject {
         create(difficulty)
     }
     
+    /// Creates a grid for the game depending on the difficulty level.
+    /// - Parameter difficulty: Provides a difficulty level.
     func create(_ difficulty: Difficulty) {
         // Reset the selectedRow and selectedCol.
         selectedRow = 0
