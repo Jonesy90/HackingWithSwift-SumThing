@@ -25,11 +25,15 @@ struct ContentView: View {
                             
                             ForEach(0..<userRow.count, id: \.self) { col in
                                 let selected = row == board.selectedRow && col == board.selectedCol
+                                let userValue = userRow[col] == 0 ? "" : String(userRow[col])
                                 
                                 CellView(number: userRow[col], isSelected: selected) {
                                     board.selectedRow = row
                                     board.selectedCol = col
                                 }
+                                .accessibilityValue(userValue)
+                                .accessibilityLabel("Row \(row) column \(col)")
+                                .accessibilityAddTraits(selected ? .isSelected : .isButton)
                             }
                             
                             let exampleSum = sum(forRow: exampleRow)
@@ -37,6 +41,8 @@ struct ContentView: View {
                             
                             SumView(number: exampleSum)
                                 .foregroundStyle(exampleSum == userSum ? .black : .red)
+                                .accessibilityLabel("Row \(row + 1) sum\(exampleSum)")
+                                .accessibilityHint(exampleSum == userSum ? "Correct" : "Incorrect")
                         }
                     }
                     GridRow {
@@ -46,6 +52,8 @@ struct ContentView: View {
                             
                             SumView(number: exampleSum)
                                 .foregroundStyle(exampleSum == userSum ? .black : .red)
+                                .accessibilityLabel("Column \(col + 1) sum\(exampleSum)")
+                                .accessibilityHint(exampleSum == userSum ? "Correct" : "Incorrect")
                         }
                     }
                     
@@ -59,6 +67,8 @@ struct ContentView: View {
                         Button(String(i)) {
                             board.enter(i)
                         }
+                        .accessibilityLabel("Enter \(i)")
+                        .accessibilityHint(board.hint(for: i))
                         .frame(maxWidth: .infinity)
                         .font(.largeTitle)
                     }
@@ -94,6 +104,7 @@ struct ContentView: View {
                     Text("You've solved the board correctly!")
                 }
             }
+            .dynamicTypeSize(...DynamicTypeSize.xxxLarge)
         }
     }
     
