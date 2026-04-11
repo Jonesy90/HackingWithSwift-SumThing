@@ -7,7 +7,7 @@ To achieve this, we had to:
 1. Handling difficulty levels (easy, medium, tricky, taxing and nightmare).
 
 ## Screenshots
-<img width="446" height="918" alt="Screenshot 2026-04-11 at 09 11 59" src="https://github.com/user-attachments/assets/d1fd7821-ca4b-4e9c-acaf-e8e45721f621" />
+<img width="223" height="459" alt="Screenshot 2026-04-11 at 09 11 59" src="https://github.com/user-attachments/assets/d1fd7821-ca4b-4e9c-acaf-e8e45721f621" />
 
 
 ## What I Learnt
