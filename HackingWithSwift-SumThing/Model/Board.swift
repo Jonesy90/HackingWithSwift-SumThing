@@ -21,6 +21,40 @@ class Board: ObservableObject {
     @Published var selectedRow = 0
     @Published var selectedCol = 0
     
+    // A computed property to check if the board is correctly solved.
+    var isSolved: Bool {
+        // Checks if the Rows are correct.
+        for i in 0..<exampleCells.count {
+            let exampleSum = exampleCells[i].reduce(0, +)
+            let userSum = userCells[i].reduce(0, +)
+            
+            if exampleSum != userSum {
+                return false
+            }
+        }
+        
+        // Checks if the Columns are correct.
+        for i in 0..<exampleCells[0].count {
+            let exampleSum = exampleCells.reduce(0) { $0 + $1[i] }
+            let userSum = userCells.reduce(0) { $0 + $1[i] }
+            
+            if exampleSum != userSum {
+                return false
+            }
+        }
+        
+        // Has any 0 been left in any of the cells.
+        for row in userCells {
+            for col in row {
+                if col == 0 {
+                    return false
+                }
+            }
+        }
+        
+        return true
+    }
+    
     init(_ difficulty: Difficulty) {
         create(difficulty)
     }
