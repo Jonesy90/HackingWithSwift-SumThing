@@ -10,6 +10,8 @@ import SwiftUI
 struct ContentView: View {
     @StateObject private var board = Board(.medium)
     
+    @State private var isGameOver = false
+    
     var body: some View {
         NavigationStack {
             VStack {
@@ -62,8 +64,36 @@ struct ContentView: View {
                     }
                 }
                 .padding()
+                
+                Button("Submit") {
+                    isGameOver = true
+                }
+                .buttonStyle(.borderedProminent)
+                .disabled(board.isSolved == false)
+                
+                Spacer()
             }
             .navigationTitle(Text("SumThing"))
+            .toolbar {
+                Button {
+                    isGameOver = true
+                } label: {
+                    Label("Start a new game", systemImage: "arrow.clockwise")
+                }
+            }
+            .alert("Start a new game", isPresented: $isGameOver) {
+                ForEach(Difficulty.allCases, id: \.self) { difficulty in
+                    Button(String(describing: difficulty).capitalized) {
+                        startGame(difficulty)
+                    }
+                }
+                
+                Button("Cancel", role: .cancel) { }
+            } message : {
+                if board.isSolved {
+                    Text("You've solved the board correctly!")
+                }
+            }
         }
     }
     
@@ -73,6 +103,11 @@ struct ContentView: View {
     
     func sum(forCol col: Int, in cells: [[Int]]) -> Int {
         cells.reduce(0) { $0 + $1[col] }
+    }
+    
+    func startGame(_ difficulty: Difficulty) {
+        isGameOver = false
+        board.create(difficulty)
     }
 }
 
